@@ -48,98 +48,97 @@ long long mdc(long long a, long long b)
 
     return a;
 }
-// Implementaçã0 do método p de Pollard
+// implementaçã0 do método p de Pollard
 long long pDePollard(long long n)
 {
-
-    cout << "Implementação do método p de Pollard" << endl;
-    cout << "===============================" << endl;
+    cout << "Implementação do método ρ de Pollard" << endl;
+    cout << "═══════════════════════════════════════════════════════════" << endl;
 
     // caso seja numero par
     if (n % 2 == 0)
     {
-        cout << "\n  N é par, fator trivial encontrado: 2" << endl;
+        cout << "\nN é par, fator trivial encontrado: 2" << endl;
         return 2;
     }
 
     // se n for primo
     if (ePrimo(n))
     {
-        cout << "\n  N = " << n << " é primo!" << endl;
+        cout << "\nN = " << n << " é primo!" << endl;
         return n;
     }
 
     long long x0 = 2; // semente
-    cout << "1) n = " << n << endl;
-    cout << "2) Semente x0 = 2" << endl;
-
-    vector<long long> sequencia; // vetor de x
-    sequencia.push_back(x0);
+    cout << "\n1) n = " << n << endl;
+    cout << "2) Polinômio: g(x) = x² + 1" << endl;
+    cout << "3) Semente: x₀ = 2\n"
+         << endl;
 
     unsigned int a = 1;
 
-    long long xk = x0; // xk = (xk^2 + 1) mod n
-
-    // setw para formatar a saída
-    cout << "   " << left << setw(10) << "k"
+    // gerar algumas iterações iniciais (opcional, só pra visualização)
+    cout << "Sequência inicial (primeiras 10 iterações):" << endl;
+    cout << left << setw(10) << "k"
          << setw(15) << "xₖ"
-         << setw(20) << "xₖ² + " << a
-         << setw(15) << "xₖ₊₁ mod N" << endl;
-    cout << "   " << string(60, '-') << endl;
-    cout << "   " << left << setw(10) << 0
+         << setw(20) << "g(xₖ) = xₖ² + 1"
+         << setw(15) << "xₖ₊₁ mod n" << endl;
+    cout << string(60, '-') << endl;
+
+    long long xk = x0;
+    cout << left << setw(10) << 0
          << setw(15) << x0
          << setw(20) << "-"
          << setw(15) << "-" << endl;
 
-    int max_seq = 20; // Limitar visualização
-    for (int k = 0; k < max_seq; k++)
+    for (int k = 0; k < 10; k++)
     {
         long long fxk = xk * xk + a;
         xk = fxk % n;
-        sequencia.push_back(xk);
 
-        cout << "   " << left << setw(10) << (k + 1)
+        cout << left << setw(10) << (k + 1)
              << setw(15) << xk
              << setw(20) << fxk
              << setw(15) << xk << endl;
     }
 
-    // encontrar um fator d de n que D < N, D != 1, D|N
-    cout << "Encontrar fator D de N garantindo D << N, D ≠ 1, D|N" << endl;
-    cout << "   D = mdc(|xⱼ - xᵢ|, N), onde xᵢ ≡ xⱼ (mod D), xᵢ ≠ xⱼ, i < j" << endl
+    // encontrar fator usando Floyd (tortoise and hare)
+    cout << "\nBuscando fator D de N (D << N, D ≠ 1, D|N)" << endl;
+    cout << "Método: Floyd (tartaruga e lebre)" << endl;
+    cout << "D = mdc(|xⱼ - xᵢ|, N), onde xᵢ ≡ xⱼ (mod D)\n"
          << endl;
 
-    cout << "   " << left << setw(8) << "i"
+    cout << left << setw(8) << "i"
          << setw(8) << "j"
          << setw(12) << "xᵢ"
          << setw(12) << "xⱼ"
          << setw(15) << "|xⱼ - xᵢ|"
          << setw(15) << "D=mdc(...,N)" << endl;
-    cout << "   " << string(70, '-') << endl;
+    cout << string(70, '-') << endl;
 
     long long d = 1;
     int iteracoes = 0;
-    const int ITERACOES_MAX = 1000; // limitar o número de iterações
+    const int ITERACOES_MAX = 10000;
 
-    long long xi = 0, xj = 0;
+    long long xi = x0;
+    long long xj = x0;
 
     while (d == 1 && iteracoes < ITERACOES_MAX)
     {
-        // avanca na sequencia
+        // xi avança 1 passo
         xi = ((xi * xi) % n + a) % n;
 
-        // avanca duas vezes na sequencia
+        // xj avança 2 passos
         xj = ((xj * xj) % n + a) % n;
         xj = ((xj * xj) % n + a) % n;
 
         long long diff = abs(xj - xi);
-        d = mdc(diff, n);
+        d = mdc(diff, n); // ← USA mdc_simples (sem print)
         iteracoes++;
 
-        // mostrar o processo
+        // Mostrar apenas algumas iterações
         if (iteracoes <= 15 || d > 1)
         {
-            cout << "   " << left << setw(8) << iteracoes
+            cout << left << setw(8) << iteracoes
                  << setw(8) << (2 * iteracoes)
                  << setw(12) << xi
                  << setw(12) << xj
@@ -148,44 +147,63 @@ long long pDePollard(long long n)
         }
         else if (iteracoes == 16)
         {
-            cout << "   ... (continuando iterações) ...\n";
+            cout << "... (continuando iterações) ...\n";
         }
 
+        // Encontrou fator não trivial
+        if (d > 1 && d < n)
+        {
+            cout << "\n✓ Fator não trivial encontrado após " << iteracoes << " iterações!" << endl;
+            break;
+        }
+
+        // Falha: divisor trivial
         if (d == n)
         {
-            cout << "\n   ✗ Falha: D = N (divisor trivial)\n";
-            cout << "   Tente outra semente ou outro polinômio\n";
+            cout << "\n✗ Falha: D = N (divisor trivial)" << endl;
+            cout << "Tente outra semente ou outro polinômio" << endl;
             return -1;
         }
     }
 
     if (iteracoes >= ITERACOES_MAX)
     {
-        cout << "\n   ✗ Número excessivo de iterações!\n";
+        cout << "\n✗ Número excessivo de iterações!" << endl;
         return -1;
     }
 
-    long long p = d;
-    long long q = n / d;
+    // Calcular os dois fatores
+    long long fator1 = d;
+    long long fator2 = n / d;
 
-    cout << "════════════════════════════════════════════════════════════" << endl;
-    cout << "  RESULTADO DA FATORAÇÃO\n";
-    cout << "════════════════════════════════════════════════════════════" << endl
+    cout << "\n═══════════════════════════════════════════════════════════" << endl;
+    cout << "RESULTADO DA FATORAÇÃO" << endl;
+    cout << "═══════════════════════════════════════════════════════════\n"
          << endl;
 
     cout << "n = " << n << endl;
-    cout << "p = " << p << endl;
+    cout << "Fator 1 = " << fator1 << (ePrimo(fator1) ? " (primo)" : " (composto)") << endl;
+    cout << "Fator 2 = " << fator2 << (ePrimo(fator2) ? " (primo)" : " (composto)") << endl;
 
-    cout << "  Verificação: " << p << " × " << q << " = " << (p * q);
-    if (p * q == n)
-        cout << " ✓\n";
+    cout << "\nVerificação: " << fator1 << " × " << fator2 << " = " << (fator1 * fator2);
+    if (fator1 * fator2 == n)
+        cout << " ✓" << endl;
     else
-        cout << " ✗ ERRO!\n";
+        cout << " ✗ ERRO!" << endl;
 
-    cout << "\n  ∴ " << n << " = " << p << " × " << q << "\n\n";
+    cout << "\n∴ " << n << " = " << fator1 << " × " << fator2 << endl;
 
-    return d;
+    // ===== RETORNA O MENOR FATOR =====
+    // Isso garante mais consistência
+    long long menor_fator = min(fator1, fator2);
+
+    cout << "\nRetornando menor fator: " << menor_fator << endl;
+    cout << "═══════════════════════════════════════════════════════════\n"
+         << endl;
+
+    return menor_fator;
 }
+
 // encontrar expoente publico E
 long long encontrarEPublico(long long phi_n)
 {
@@ -626,6 +644,23 @@ int main()
 
     long long p = pDePollard(n1);
     long long q = pDePollard(n2);
+
+    // para numeros que compartilham um fator comum
+    if (p == q)
+    {
+        cout << "\n⚠ AVISO: Ambos retornaram o mesmo fator (" << p << ")" << endl;
+        cout << "Ajustando para usar os fatores complementares...\n"
+             << endl;
+
+        // Pegar o outro fator de n1
+        long long pComplementar = n1 / p;
+
+        // Pegar o outro fator de n2
+        long long qComplementar = n2 / q;
+
+        p = pComplementar;
+        q = qComplementar;
+    }
 
     cout << "\n═══════════════════════════════════════════════════════════\n\n";
 
