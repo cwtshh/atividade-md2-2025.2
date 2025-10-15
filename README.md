@@ -5,3 +5,8 @@
 **Professor**: Cristiane Loesch de Souza Costa
 **Disciplina**: Matemática Discreta II
 
+### Alunos
+
+- Gustavo Costa de Jesus **211061814**
+- Iderlan Junio Cardoso da Silva 
+
