@@ -1,3 +1,10 @@
+// ═══════════════════════════════════════════════════════════
+// Criptografia RSA
+// Matemática Discreta 2
+// Alunos:
+// - Gustavo Costa de Jesus
+// - Iderlan Junio Cardoso da Silva
+// ═══════════════════════════════════════════════════════════
 #include <iostream>
 #include <vector>
 #include <cmath>
@@ -776,6 +783,16 @@ int main()
     for (char &c : msgUpper)
         c = toupper(c);
 
+    cout << "\nMensagem Criptografada: ";
+    for (size_t i = 0; i < blocos.size(); i++)
+    {
+        cout << blocos[i];
+        if (i < blocos.size() - 1)
+            cout << " ";
+    }
+    cout << "\n";
+    cout
+        << "\nVerificando se a mensagem original e a recuperada são idênticas..." << endl;
     cout << "\nMensagem original:    \"" << msgUpper << "\"" << endl;
     cout << "Mensagem recuperada:  \"" << mensagemRecuperada << "\"" << endl;
 

@@ -1,3 +1,10 @@
+// ═══════════════════════════════════════════════════════════
+// A razão da eficiência de um número
+// Matemática Discreta 2
+// Alunos:
+// - Gustavo Costa de Jesus
+// - Iderlan Junio Cardoso da Silva
+// ═══════════════════════════════════════════════════════════
 #include <iostream>
 #include <vector>
 #include <cmath>
@@ -102,6 +109,10 @@ int main()
 
     cout << "═══════════════════════════════════════════════════════════" << endl;
     cout << "A razão da eficiencia de um número" << endl;
+    cout << " Matemática Discreta 2" << endl;
+    cout << " Alunos: " << endl;
+    cout << " - Gustavo Costa de Jesus" << endl;
+    cout << " - Iderlan Junio Cardoso da Silva" << endl;
     cout << "═══════════════════════════════════════════════════════════" << endl;
 
     cout << "Digite um número inteiro positivo: ( 1 ≤ n ≤ 105 ) " << endl;

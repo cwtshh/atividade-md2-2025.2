@@ -1,3 +1,10 @@
+// ═══════════════════════════════════════════════════════════
+// Sincronização de Chaves Periódicas
+// Matemática Discreta 2
+// Alunos:
+// - Gustavo Costa de Jesus
+// - Iderlan Junio Cardoso da Silva
+// ═══════════════════════════════════════════════════════════
 #include <iostream>
 #include <vector>
 
@@ -41,8 +48,18 @@ long long calcularVariosMMC(vector<int> &ciclos)
 int main()
 {
     int n;
+    cout << "═══════════════════════════════════════════════════════════" << endl;
+    cout << " Sincronização de Chaves Periódicas" << endl;
+    cout << " Matemática Discreta 2" << endl;
+    cout << " Alunos: " << endl;
+    cout << " - Gustavo Costa de Jesus" << endl;
+    cout << " - Iderlan Junio Cardoso da Silva" << endl;
+    cout << "═══════════════════════════════════════════════════════════" << endl;
+
+    cout << "Digite o número de chaves periódicas: ( 1 ≤ n ≤ 10 ) " << endl;
     cin >> n;
 
+    cout << "Digite os ciclos de ativação das chaves:" << endl;
     vector<int> ciclos(n);
     for (int i = 0; i < n; i++)
     {
