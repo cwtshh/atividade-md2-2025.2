@@ -56,7 +56,7 @@ int calcularTau(const vector<FatorPrimo> &fatores)
     cout << "\nCálculo de τ(N):" << endl;
     cout << "τ(N) = ";
 
-    for (int i = 0; i < fatores.size(); i++)
+    for (long unsigned int i = 0; i < fatores.size(); i++)
     {
         int termo = fatores[i].expoente + 1;
         tau *= termo;
@@ -76,7 +76,7 @@ long long calcularSigma(const vector<FatorPrimo> &fatores)
     cout << "\nCálculo de σ(N):" << endl;
     cout << "σ(N) = ";
 
-    for (int i = 0; i < fatores.size(); i++)
+    for (long unsigned int i = 0; i < fatores.size(); i++)
     {
         int p = fatores[i].primo;
         int a = fatores[i].expoente;
@@ -115,7 +115,7 @@ int main()
     cout << "\nFatoração prima de " << n << ":" << endl;
     cout << "═══════════════════════════════════════════════════════════" << endl;
     cout << " = ";
-    for (int i = 0; i < fatores.size(); i++)
+    for (long unsigned int i = 0; i < fatores.size(); i++)
     {
         cout << fatores[i].primo;
         if (fatores[i].expoente > 1)
