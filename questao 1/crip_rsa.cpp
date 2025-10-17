@@ -31,9 +31,9 @@ long long mdc(long long a, long long b)
     long long resto;
 
     cout << "Calculo do MDC usando Algoritmo de Euclides" << endl;
-    cout << "===============================" << endl;
+    cout << "═══════════════════════════════" << endl;
     cout << " a = b * q + r" << endl;
-    cout << "===============================" << endl;
+    cout << "═══════════════════════════════" << endl;
     // enquanto o resto for diferente de 0
     while (b != 0)
     {
